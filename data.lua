@@ -3,8 +3,8 @@ PROTOCHAR.is_debug = false
 local charname = "protogen-skin"
 
 -- Setup new animations, etc
-local ICONPATH = "__ProtogenCharacterUpdated__/graphics/icons/"
-local SR_IMGPATH = "__ProtogenCharacterUpdated__/graphics/SR/"
+local ICONPATH = "__zzz-cat-patcher__/graphics/icons/"
+local SR_IMGPATH = "__zzz-cat-patcher__/graphics/SR/"
 local HR_IMGPATH = "__ProtogenCharacterUpdatedHR__/graphics/HR/"
 
 local protogen_animations = {
