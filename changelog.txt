@@ -1,9 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 2026-01-09
+  Changes:
+    - Replaced mod replacement with scuffed (but working) patch (via HuTaoSkin by @BigBossOfThisGym)
+---------------------------------------------------------------------------------------------------
 Version: 0.0.2
 Date: 2026-01-07
   Changes:
-    - Replaced ProtegenCharacterUpdated entirely, since the fix did not work. That's what I get for not testing with an unmodified version of the mod.
-
+    - Replaced ProtogenCharacterUpdated entirely, since the fix did not work. That's what I get for not testing with an unmodified version of the mod.
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.1
 Date: 2026-01-07
