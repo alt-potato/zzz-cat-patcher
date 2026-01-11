@@ -1,1 +1,1 @@
-require("patches.protogen-patch")
+require("patches.mas-skin-patches")

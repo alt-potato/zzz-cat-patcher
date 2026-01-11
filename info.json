@@ -4,6 +4,6 @@
   "title": "Cat Patcher",
   "author": "meconeko",
   "factorio_version": "2.0",
-  "dependencies": ["ProtogenCharacterUpdated"],
+  "dependencies": ["? ProtogenCharacterUpdated", "? metal-and-stars", "? koboldengineer"],
   "description": "A mod containing various patches to various mods."
 }
