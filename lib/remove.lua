@@ -1,0 +1,70 @@
+local lib = {}
+
+---@class lib.remove_item_opt
+---@field item_type string?
+---@field hide_item_only boolean?
+---@field remove_recipes string[]? -- The recipes to remove, defaults to { item_name }
+---@field use_dummy_recipes boolean? -- Whether to replace the recipes with dummy recipes
+---@field remove_from_technologies string[]? -- The technologies to remove the recipes from
+
+-- Removes an item and its recipes from the game and any given technologies.
+-- If use_dummy_recipes is true, the recipes will be replaced with empty recipes.
+---@param item_name string
+---@param opt? lib.remove_item_opt
+lib.remove_item = function(item_name, opt)
+	opt = opt or {}
+	local item_type = opt.item_type or "item"
+	local recipes_to_remove = opt.remove_recipes or { item_name }
+
+	log("Removing " .. item_name .. " with recipe(s) " .. table.concat(recipes_to_remove, ", "))
+
+	local item_to_remove = data.raw[item_type][item_name]
+
+	if not item_to_remove then
+		log("\tWARNING: Item " .. item_name .. " does not exist.")
+
+	elseif opt.hide_item_only then
+		log("\tHiding item " .. item_name .. "...")
+
+		item_to_remove.icon = "__base__/graphics/icons/signal/signal-deny.png"
+		item_to_remove.icon_size = 64
+		item_to_remove.hidden = true
+		item_to_remove.hidden_in_factoriopedia = true
+	else
+		item_to_remove = nil
+	end
+
+	for _, recipe_name in pairs(recipes_to_remove) do
+		log("\tRemoving recipe " .. recipe_name .. "...")
+		data.raw.recipe[recipe_name] = nil
+
+		if opt.use_dummy_recipes then
+			log("\tCreating dummy recipe " .. recipe_name .. "...")
+			data:extend({
+				{
+					type = "recipe",
+					name = recipe_name,
+					ingredients = {},
+					results = {},
+					hidden_in_factoriopedia = true,
+					hide_from_player_crafting = true,
+					hide_from_signal_gui = true,
+					enabled = false,
+					icon = "__base__/graphics/icons/signal/signal-deny.png",
+				},
+			})
+		end
+
+		for _, technology_name in pairs(opt.remove_from_technologies or {}) do
+			for i = 1, #data.raw.technology[technology_name].effects do
+				if data.raw.technology[technology_name].effects[i].recipe == recipe_name then
+					log("\t\tRemoving recipe " .. recipe_name .. " from technology " .. technology_name .. "...")
+					table.remove(data.raw.technology[technology_name].effects, i)
+					break
+				end
+			end
+		end
+	end
+end
+
+return lib
