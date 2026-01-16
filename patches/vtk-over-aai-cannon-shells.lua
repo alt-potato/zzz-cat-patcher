@@ -2,7 +2,7 @@ if not (mods["aai-programmable-vehicles"] and mods["vtk-cannon-turret"]) then
     return
 end
 
-local lib = require("lib.remove")
+local lib = require("lib.removal")
 
 -- remove aai precision cannon shells
 local unsafe_to_remove = mods["RegularRecipeList-Compatible_with_AAI"] or mods["aai-vehicles-ironclad"] or false
