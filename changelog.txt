@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 2026-01-15
+  Changes:
+    - Added "compat" between aai-programmable-vehicles and vtk-cannon-turret to prefer the latter's cannon magazines (disabled by default).
+---------------------------------------------------------------------------------------------------
 Version: 0.2.0
 Date: 2026-01-11
   Changes:
