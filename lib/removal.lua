@@ -67,4 +67,14 @@ lib.remove_item = function(item_name, opt)
 	end
 end
 
+lib.remove_technology = function(technology_name)
+	log("Removing technology " .. technology_name .. "...")
+
+	if not data.raw.technology[technology_name] then
+		log("\tWARNING: Item " .. item_name .. " does not exist.")
+	end
+
+	data.raw.technology[technology_name] = nil
+end
+
 return lib

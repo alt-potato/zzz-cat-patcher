@@ -10,5 +10,11 @@ data:extend({
 		name = "cat-patcher-vtk-over-aai-cannon-shells",
 		setting_type = "startup",
 		default_value = false,
-	}
+	},
+	{
+		type = "bool-setting",
+		name = "cat-patcher-remove-mas-antimatter-bots",
+		setting_type = "startup",
+		default_value = false,
+	},
 })
