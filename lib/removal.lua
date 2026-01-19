@@ -22,7 +22,6 @@ lib.remove_item = function(item_name, opt)
 
 	if not item_to_remove then
 		log("\tWARNING: Item " .. item_name .. " does not exist.")
-
 	elseif opt.hide_item_only then
 		log("\tHiding item " .. item_name .. "...")
 
