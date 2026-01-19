@@ -1,6 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.0
+Date: 2026-01-19
+  Changes:
+    - Replaced scuffed skin patch with a less scuffed generalized patch :3
+---------------------------------------------------------------------------------------------------
 Version: 0.4.0
-Date: 2026-01-16
+Date: 2026-01-19
   Changes:
     - Added an option to disable Metal and Stars' Antimatter robots if Fusion Robots is installed. Defers to Vesta's version of this option, if installed (and enabled).
     - Added compat with wickerbeast/lexxy-wickerbeast
