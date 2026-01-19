@@ -1,12 +1,11 @@
 for corpse_name, corpse in pairs(data.raw["character-corpse"]) do
-	if corpse then
+	if corpse and corpse.armor_picture_mapping and corpse.pictures then
 		local num_pictures = #corpse.pictures
 		for armor_name, index in pairs(corpse.armor_picture_mapping or {}) do
 			if index > num_pictures then
 				log(
-				"For "
-						.. corpse_name
-						.. ", limiting armor_picture_mapping of "
+					corpse_name
+						.. ": limiting armor_picture_mapping of "
 						.. armor_name
 						.. " ("
 						.. index
@@ -17,5 +16,7 @@ for corpse_name, corpse in pairs(data.raw["character-corpse"]) do
 				corpse.armor_picture_mapping[armor_name] = num_pictures
 			end
 		end
+	else
+		log("No armor_picture_mapping or no pictures for " .. corpse_name .. "?")
 	end
 end
