@@ -2,7 +2,7 @@ if not mods["Automatic_Train_Painter"] then
 	return
 end
 
-local remove_item = require("lib.removal").remove_item
+local remove_item = require("lib.manipulation").remove_item
 
 remove_item("manual-color-module", {
 	item_type = "generator-equipment",

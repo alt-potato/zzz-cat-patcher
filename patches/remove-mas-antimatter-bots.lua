@@ -2,21 +2,21 @@ if not mods["metal-and-stars"] then
 	return
 end
 
-local rm_lib = require("lib.removal")
+local m_lib = require("lib.manipulation")
 
 if not (mods["skewer-planet-vesta"] and settings.startup["ske_disable_metal_and_stars_bots"].value) then
 	-- remove antimatter robots and associated tech
-	rm_lib.remove_item("antimatter-construction-robots", {
+	m_lib.remove_item("antimatter-construction-robots", {
 		remove_from_technologies = { "antimatter-robots" },
 	})
-	rm_lib.remove_item("antimatter-logistic-robots", {
+	m_lib.remove_item("antimatter-logistic-robots", {
 		remove_from_technologies = { "antimatter-robots" },
 	})
 
 	-- data.raw["construction-robot"]["antimatter-construction-robot"] = nil
 	-- data.raw["logistic-robot"]["antimatter-logistic-robot"] = nil
 
-	rm_lib.remove_technology("antimatter-robots")
+	m_lib.remove_technology("antimatter-robots")
 end
 
 -- rename antimatter to better reflect its (now-limited) function
