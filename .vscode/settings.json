@@ -1,0 +1,9 @@
+{
+    "Lua.diagnostics.globals": [
+        "serpent",
+        "data",
+        "log",
+        "mods",
+        "settings"
+    ],
+}
