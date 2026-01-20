@@ -22,5 +22,11 @@ data:extend({
 		name = "cat-patcher-remove-manual-color-module",
 		setting_type = "startup",
 		default_value = false,
+	},
+	{
+		type = "bool-setting",
+		name = "cat-patcher-electric-trains-on-moshine",
+		setting_type = "startup",
+		default_value = false,
 	}
 })
