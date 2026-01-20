@@ -6,7 +6,7 @@ OUT_DIR="${2:-${SRC_DIR}/dist}" # output directory
 
 error() {
     echo "i am die, thank you forever"
-    echo "$*" >&2
+    printf 'ERROR: %s\n' "$*" >&2
     exit 1
 }
 
@@ -20,7 +20,6 @@ if ! command -v jq >/dev/null 2>&1; then
 
     # output filename: output.zip
     ZIP_NAME="output.zip"
-    ZIP_PATH="${OUT_DIR}/${ZIP_NAME}"
 else
     MOD_NAME=$(jq -r '.name'   "${INFO_JSON}") || error "Failed to read name from info.json"
     MOD_VER=$(jq -r '.version' "${INFO_JSON}") || error "Failed to read version from info.json"
@@ -28,14 +27,18 @@ else
 
     # output filename: <name>_<version>.zip
     ZIP_NAME="${MOD_NAME}_${MOD_VER}.zip"
-    ZIP_PATH="${OUT_DIR}/${ZIP_NAME}"
 fi
+
+ZIP_PATH="${OUT_DIR}/${ZIP_NAME}"
+PARENT_DIR="$(dirname "${SRC_DIR}")"
+BASE_PATH="$(basename "${SRC_DIR}")"
 
 # create output folder
 mkdir -p "${OUT_DIR}"
 
 # if zip with same name already exists, delete it
 if [[ -f "${ZIP_PATH}" ]]; then
+    echo "deleting existing zip: ${ZIP_PATH}"
     rm "${ZIP_PATH}"
 fi
 
@@ -45,33 +48,28 @@ fi
 #   -9           : maximum compression
 #   -r           : recurse into directories
 #   -q           : quiet
-#   --exclude    : see EXCLUDE_PATTERNS
+#   -x           : see EXCLUDE_PATTERNS
 
 EXCLUDE_PATTERNS=(
-    "build.sh"
-    "dist*"
-    "*.swp"      # vim swap
+    "*/build.sh"
+    "*/dist/*"
+    ".swp"      # vim swap
     "*~"         # emacs backup
     ".DS_Store"  # macOS Finder metadata
     "__pycache__"
-    ".git"
-    ".gitignore"
-    ".gitattributes"
-    ".vscode*"
+    "*/.git/*"
+    "*/.gitignore"
+    "*/.gitattributes"
+    "*/.vscode/*"
 )
-EXCLUDE_ARGS=()
-for pat in "${EXCLUDE_PATTERNS[@]}"; do
-    EXCLUDE_ARGS+=(--exclude="${pat}")
-done
-
-echo "Building ${ZIP_NAME} …"
+echo "building ${ZIP_NAME} with parent folder ${BASE_PATH}"
 (
-    cd "${SRC_DIR}"
-    zip -9 -r -X -q "${ZIP_PATH}" . "${EXCLUDE_ARGS[@]}"
+    cd "${SRC_DIR}/.."
+    zip -9 -r -X -q "${ZIP_PATH}" "${BASE_PATH}" -x "${EXCLUDE_PATTERNS[@]}"
 )
 
 # sanity check: make sure zip contains info.json
-if ! unzip -l "${ZIP_PATH}" info.json >/dev/null 2>&1; then
+if ! unzip -l "${ZIP_PATH}" "${BASE_PATH}"/info.json >/dev/null 2>&1; then
     error "Built zip is missing info.json! something went wrong!"
 fi
 
