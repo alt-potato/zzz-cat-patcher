@@ -12,7 +12,11 @@
     "? lexxy-wickerbeast",
     "? aai-programmable-vehicles",
     "? vtk-cannon-turret",
-    "(?) RegularRecipeList-Compatible_with_AAI"
+    "? Automatic_Train_Painter",
+    "? cybersyn",
+    "(?) RegularRecipeList-Compatible_with_AAI",
+    "(?) cybersyn-tweaks",
+    "(?) cybersyn-tweaks-patched"
   ],
   "description": "A mod containing various patches to various mods."
 }
