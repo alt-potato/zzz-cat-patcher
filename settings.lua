@@ -17,4 +17,10 @@ data:extend({
 		setting_type = "startup",
 		default_value = false,
 	},
+	{
+		type = "bool-setting",
+		name = "cat-patcher-remove-manual-color-module",
+		setting_type = "startup",
+		default_value = false,
+	}
 })
