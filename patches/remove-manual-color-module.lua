@@ -9,7 +9,6 @@ remove_item("manual-color-module", {
 	remove_recipes = {},
 })
 remove_item("manual-color-module", {
-	item_type = "generator-equipment",
 	use_dummy_recipes = true,
 	remove_from_technologies = { "automated-rail-transportation" },
 })
