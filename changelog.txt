@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.8.0
+Date: 2026-01-20
+  Changes:
+    - Added patch to remove floating long inserters, if disabled by Moshine
+    - Added patch to remove all bioluminescent floating inserters (disabled by default, since i havent gotten to Tenebris yet :p)
+---------------------------------------------------------------------------------------------------
 Version: 0.7.0
 Date: 2026-01-20
   Changes:
