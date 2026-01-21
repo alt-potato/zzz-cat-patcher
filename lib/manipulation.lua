@@ -156,4 +156,51 @@ lib.modify_ingredients = function(recipe_name, modifiers)
 	end
 end
 
+---@alias opcode string
+---@type table<opcode, function<table>>
+local defer_operations = {}
+
+lib.add_defer_operation = function(opcode, operation)
+	defer_operations[opcode] = operation
+end
+
+---@alias predicate function<boolean>
+---@type table<string, table<predicate, opcode>>
+local deferred = {}
+
+---Collects prototypes to do an operation on and stores them, to be operated on later.
+---@param category string
+---@param predicate predicate
+---@param opcode opcode
+lib.defer = function(category, predicate, opcode)
+	if not defer_operations[opcode] then
+		error("no operation for opcode \"" .. opcode .. "\".")
+		return
+	end
+
+	log("Deferring operation \"" .. opcode .. "\" on \"" .. category .. "\"...")
+
+	if not deferred[category] then
+		deferred[category] = {}
+	end
+	deferred[category][predicate] = opcode
+end
+
+lib.execute_deferred = function()
+	log(serpent.block(deferred))
+	for category, predicates in pairs(deferred) do
+		log("Executing " .. table_size(predicates) .. " deferred operations on " .. category .. "...")
+
+		for _, prototype in pairs(data.raw[category]) do
+			for predicate, opcode in pairs(predicates) do
+				-- log("\tlog spam lol .." .. prototype.name)
+				if predicate(prototype) then
+					log("\tExecuting deferred operation \"" .. opcode .. "\" on \"" .. prototype.name .. "\"...")
+					defer_operations[opcode](prototype)
+				end
+			end
+		end
+	end
+end
+
 return lib

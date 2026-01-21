@@ -5,3 +5,12 @@ end
 if settings.startup["cat-patcher-electric-trains-on-moshine"].value then
 	require("patches.electric-trains-on-moshine")
 end
+if settings.startup["cat-patcher-remove-floating-long-stack-inserter"].value then
+    require("patches.remove-floating-long-stack-inserter")
+end
+
+if settings.startup["cat-patcher-remove-floating-bioluminescents"].value then
+    require("patches.remove-floating-bioluminescents")
+end
+
+require("lib.manipulation").execute_deferred()
