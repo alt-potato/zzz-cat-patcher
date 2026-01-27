@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.9.1
+Date: 2026-01-27
+  Changes:
+    - Modify lex-aircraft-grayscale to resize existing assets instead of using upscaled ones, saving about 14MB of storage
+---------------------------------------------------------------------------------------------------
 Version: 0.9.0
 Date: 2026-01-27
   Changes:
