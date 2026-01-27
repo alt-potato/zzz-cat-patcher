@@ -187,7 +187,6 @@ lib.defer = function(category, predicate, opcode)
 end
 
 lib.execute_deferred = function()
-	log(serpent.block(deferred))
 	for category, predicates in pairs(deferred) do
 		log("Executing " .. table_size(predicates) .. " deferred operations on " .. category .. "...")
 
