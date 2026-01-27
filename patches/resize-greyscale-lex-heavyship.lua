@@ -8,7 +8,6 @@ local heavyship = data.raw["spider-vehicle"][heavyship_name]
 -- should be 5600x5600 instead of 4000x4000
 log("patching grayscale " .. heavyship_name .. " (4000x4000 -> 5600x5600)...")
 --             /e\
--- replace_stripes(heavyship_name, heavyship_layer, heavyship_opts)
 
 if
     heavyship
