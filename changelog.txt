@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.9.0
+Date: 2026-01-27
+  Changes:
+    - Added patch to fix mismatched sprite size for lex-aircraft-grayscale (by replacing it with an upscaled version)
+---------------------------------------------------------------------------------------------------
 Version: 0.8.0
 Date: 2026-01-20
   Changes:
