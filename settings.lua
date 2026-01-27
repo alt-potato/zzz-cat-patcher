@@ -8,6 +8,13 @@ data:extend({
 	},
 	{
 		type = "bool-setting",
+		name = "cat-patcher-resize-greyscale-lex-heavyship",
+		setting_type = "startup",
+		default_value = true,
+		order = "a"
+	},
+	{
+		type = "bool-setting",
 		name = "cat-patcher-vtk-over-aai-cannon-shells",
 		setting_type = "startup",
 		default_value = false,
