@@ -20,4 +20,6 @@ if not (mods["skewer-planet-vesta"] and settings.startup["ske_disable_metal_and_
 end
 
 -- rename antimatter to better reflect its (now-limited) function
-data.raw.item["antimatter"].localised_name = { "item-name.antimatter-catalyst" }
+if data.raw.item["antimatter"] then
+	data.raw.item["antimatter"].localised_name = { "cat-patch-item-name.antimatter-catalyst" }
+end

@@ -4,6 +4,7 @@
         "data",
         "log",
         "mods",
-        "settings"
+        "settings",
+        "table_size"
     ],
 }
