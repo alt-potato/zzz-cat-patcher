@@ -44,14 +44,22 @@ lib.remove_item = function(item_name, opt)
 	local item_type = opt.item_type or "item"
 	local recipes_to_remove = opt.remove_recipes or { item_name }
 
-	log("Removing " .. item_type .. " \"" .. item_name .. "\" with recipe(s): " .. serpent.line(recipes_to_remove) .. "...")
+	log(
+		"Removing "
+			.. item_type
+			.. ' "'
+			.. item_name
+			.. '" with recipe(s): '
+			.. serpent.line(recipes_to_remove)
+			.. "..."
+	)
 
 	local item_to_remove = data.raw[item_type][item_name]
 
 	if not item_to_remove then
-		log("\tWARNING: Item \"" .. item_name .. "\" does not exist.")
+		log('\tWARNING: Item "' .. item_name .. '" does not exist.')
 	elseif opt.hide_item_only then
-		log("\tHiding item \"" .. item_name .. "\"")
+		log('\tHiding item "' .. item_name .. '"')
 
 		item_to_remove.icon = "__base__/graphics/icons/signal/signal-deny.png"
 		item_to_remove.icon_size = 64
@@ -62,11 +70,11 @@ lib.remove_item = function(item_name, opt)
 	end
 
 	for _, recipe_name in pairs(recipes_to_remove) do
-		log("\tRemoving recipe \"" .. recipe_name .. "\"")
+		log('\tRemoving recipe "' .. recipe_name .. '"')
 		data.raw.recipe[recipe_name] = nil
 
 		if opt.use_dummy_recipes then
-			log("\t\tCreating dummy recipe \"" .. recipe_name .. "\"")
+			log('\t\tCreating dummy recipe "' .. recipe_name .. '"')
 			data:extend({
 				{
 					type = "recipe",
@@ -85,7 +93,7 @@ lib.remove_item = function(item_name, opt)
 		for _, technology_name in pairs(opt.remove_from_technologies or {}) do
 			for i = 1, #data.raw.technology[technology_name].effects do
 				if data.raw.technology[technology_name].effects[i].recipe == recipe_name then
-					log("\t\tRemoving recipe from technology \"" .. technology_name .. "\"")
+					log('\t\tRemoving recipe from technology "' .. technology_name .. '"')
 					table.remove(data.raw.technology[technology_name].effects, i)
 					break
 				end
@@ -95,13 +103,36 @@ lib.remove_item = function(item_name, opt)
 end
 
 lib.remove_technology = function(technology_name)
-	log("Removing technology \"" .. technology_name .. "\"...")
+	log('Removing technology "' .. technology_name .. '"...')
 
 	if not data.raw.technology[technology_name] then
-		log("\tWARNING: Technology \"" .. technology_name .. "\" does not exist.")
+		log('\tWARNING: Technology "' .. technology_name .. '" does not exist.')
 	end
 
 	data.raw.technology[technology_name] = nil
+end
+
+---Replaces the top-level attributes of a prototype with the given modifiers.
+---@param category string
+---@param prototype_name string
+---@param modifiers table<string, any>
+---@param create_if_missing? boolean
+lib.modify_prototype = function(category, prototype_name, modifiers, create_if_missing)
+	log("Modifying " .. category .. ' "' .. prototype_name .. '"...')
+
+	if not (data.raw[category] and data.raw[category][prototype_name]) then
+		log("\tWARNING: replacement target does not exist.")
+	end
+
+	local target = data.raw[category][prototype_name]
+
+	for key, value in pairs(modifiers) do
+		if (create_if_missing and not target[key]) or not create_if_missing then
+			target[key] = value
+		else
+			log('\tWARNING: Key "' .. key .. '" does not exist in ' .. category .. ' "' .. prototype_name .. '".')
+		end
+	end
 end
 
 ---@class IngredientPrototype
@@ -113,11 +144,11 @@ end
 ---@param recipe_name string
 ---@param modifiers IngredientPrototype|IngredientPrototype[]
 lib.modify_ingredients = function(recipe_name, modifiers)
-	log("Modifying recipe \"" .. recipe_name .. "\"...")
+	log('Modifying recipe "' .. recipe_name .. '"...')
 
 	local recipe = data.raw.recipe[recipe_name]
 	if not recipe or not recipe.ingredients then
-		log("\tWARNING: Recipe \"" .. recipe_name .. "\" does not exist.")
+		log('\tWARNING: Recipe "' .. recipe_name .. '" does not exist.')
 		return
 	end
 	if type(modifiers[1]) ~= "table" then
@@ -134,9 +165,9 @@ lib.modify_ingredients = function(recipe_name, modifiers)
 	for _, ingredient in pairs(recipe.ingredients) do
 		if modifiers[ingredient.name] and (modifiers[ingredient.name].type == ingredient.type) then
 			log(
-				"\tModifying \""
+				'\tModifying "'
 					.. ingredient.name
-					.. "\" (x"
+					.. '" (x'
 					.. ingredient.amount
 					.. " + "
 					.. modifiers[ingredient.name].amount
@@ -150,11 +181,13 @@ lib.modify_ingredients = function(recipe_name, modifiers)
 	-- add new ingredients
 	for _, modifier in pairs(modifiers) do
 		if modifier and modifier.name and modifier.type and modifier.amount and modifier.amount > 0 then
-			log("\tAdding \"" .. modifier.name .. "\" (" .. modifier.type .. " x" .. modifier.amount .. ")")
+			log('\tAdding "' .. modifier.name .. '" (' .. modifier.type .. " x" .. modifier.amount .. ")")
 			table.insert(recipe.ingredients, modifier)
 		end
 	end
 end
+
+-- --- DEFER OPERATIONS ---
 
 ---@alias opcode string
 ---@type table<opcode, function<table>>
@@ -174,11 +207,11 @@ local deferred = {}
 ---@param opcode opcode
 lib.defer = function(category, predicate, opcode)
 	if not defer_operations[opcode] then
-		error("no operation for opcode \"" .. opcode .. "\".")
+		error('no operation for opcode "' .. opcode .. '".')
 		return
 	end
 
-	log("Deferring operation \"" .. opcode .. "\" on \"" .. category .. "\"...")
+	log('Deferring operation "' .. opcode .. '" on "' .. category .. '"...')
 
 	if not deferred[category] then
 		deferred[category] = {}
@@ -194,7 +227,7 @@ lib.execute_deferred = function()
 			for predicate, opcode in pairs(predicates) do
 				-- log("\tlog spam lol .." .. prototype.name)
 				if predicate(prototype) then
-					log("\tExecuting deferred operation \"" .. opcode .. "\" on \"" .. prototype.name .. "\"...")
+					log('\tExecuting deferred operation "' .. opcode .. '" on "' .. prototype.name .. '"...')
 					defer_operations[opcode](prototype)
 				end
 			end

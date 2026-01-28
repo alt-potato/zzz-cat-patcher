@@ -5,3 +5,7 @@ end
 if settings.startup["cat-patcher-remove-manual-color-module"].value then
 	require("patches.remove-manual-color-module")
 end
+
+if settings.startup["cat-patcher-rename-stuff"].value then
+	require("patches.rename-stuff")
+end
