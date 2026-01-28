@@ -113,24 +113,35 @@ lib.remove_technology = function(technology_name)
 end
 
 ---Replaces the top-level attributes of a prototype with the given modifiers.
----@param category string
----@param prototype_name string
+---@param path string[] -- Path to the prototype, after data.raw
 ---@param modifiers table<string, any>
 ---@param create_if_missing? boolean
-lib.modify_prototype = function(category, prototype_name, modifiers, create_if_missing)
-	log("Modifying " .. category .. ' "' .. prototype_name .. '"...')
+lib.modify_prototype = function(path, modifiers, create_if_missing)
+	log('Modifying "' .. table.concat(path, ".") .. '"...')
 
-	if not (data.raw[category] and data.raw[category][prototype_name]) then
-		log("\tWARNING: replacement target does not exist.")
+	-- traverse the path
+	local current = data.raw
+	for _, segment in pairs(path) do
+		current = current[segment]
+
+		if not current then
+			log(
+				'\tWARNING: Path "'
+					.. table.concat(path, ".")
+					.. '" does not exist at segment "'
+					.. segment
+					.. '". No changes made.'
+			)
+			return
+		end
 	end
-
-	local target = data.raw[category][prototype_name]
+	local target = current
 
 	for key, value in pairs(modifiers) do
 		if (create_if_missing and not target[key]) or not create_if_missing then
 			target[key] = value
 		else
-			log('\tWARNING: Key "' .. key .. '" does not exist in ' .. category .. ' "' .. prototype_name .. '".')
+			log('\tWARNING: Key "' .. key .. '" does not exist in ' .. table.concat(path, ".") .. ".")
 		end
 	end
 end
