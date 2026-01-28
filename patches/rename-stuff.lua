@@ -16,6 +16,8 @@ end
 if mods["metal-and-stars"] then
 	-- capitalize first letter
 	modify_prototype({ "ammo", "gauss-rocket" }, { localised_name = { "cat-patch-item-name.gauss-rocket" } })
+    -- conflicts with quantum stabilizer from age of production
+    modify_prototype({ "item", "ms-quantum-stabilizer" }, { localised_name = { "cat-patch-item-name.ms-quantum-stabilizer" } })
 end
 
 if mods["NapalmArtillery"] then
