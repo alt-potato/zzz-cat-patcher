@@ -1,4 +1,4 @@
-local modify_prototype = require("lib.manipulation").modify_prototype
+local modify_prototype = require("lib.manipulation").overwrite
 
 if mods["Cerys-Moon-of-Fulgora"] then
 	-- conflicts with overclock modules from metal-and-stars

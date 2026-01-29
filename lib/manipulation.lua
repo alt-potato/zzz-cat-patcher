@@ -116,7 +116,7 @@ end
 ---@param path string[] -- Path to the prototype, after data.raw
 ---@param modifiers table<string, any>
 ---@param create_if_missing? boolean
-lib.modify_prototype = function(path, modifiers, create_if_missing)
+lib.overwrite = function(path, modifiers, create_if_missing)
 	log('Modifying "' .. table.concat(path, ".") .. '"...')
 
 	-- traverse the path
