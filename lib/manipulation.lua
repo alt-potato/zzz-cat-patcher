@@ -29,9 +29,11 @@ local lib = {}
 --
 
 ---@class lib.remove_item_opt
----@field item_type string?
+---@field item_type string|string[]? -- The type of item to remove, defaults to "item". Certain special items are in multiple categories, eg. "cars", "inserters".
+---@field quiet_miss boolean? 
 ---@field hide_item_only boolean?
 ---@field remove_recipes string[]? -- The recipes to remove, defaults to { item_name }
+---@field remove_recycling boolean? -- Whether to remove the automatically generated recycling recipe (highly recommended if called after data.lua)
 ---@field use_dummy_recipes boolean? -- Whether to replace the recipes with dummy recipes
 ---@field remove_from_technologies string[]? -- The technologies to remove the recipes from
 
@@ -41,32 +43,39 @@ local lib = {}
 ---@param opt? lib.remove_item_opt
 lib.remove_item = function(item_name, opt)
 	opt = opt or {}
-	local item_type = opt.item_type or "item"
+	local item_types = opt.item_type or { "item" } ---@type string[] -- trust me bro
+	if type(opt.item_type) == "string" then
+		item_types = { opt.item_type } -- how do i get the parser to stop being mad at me
+	end
 	local recipes_to_remove = opt.remove_recipes or { item_name }
 
 	log(
-		"Removing "
-			.. item_type
-			.. ' "'
+		'Removing "'
 			.. item_name
+			.. '" of type "'
+			.. serpent.line(recipes_to_remove)
 			.. '" with recipe(s): '
 			.. serpent.line(recipes_to_remove)
 			.. "..."
 	)
 
-	local item_to_remove = data.raw[item_type][item_name]
+	for _, item_type in pairs(item_types) do
+		local item_to_remove = data.raw[item_type][item_name]
+		if not item_to_remove then
+			if not opt.quiet_miss then
+				log("\tWARNING: " .. item_type .. ' "' .. item_name .. '" does not exist.')
+			end
+		elseif opt.hide_item_only then
+			log("\tHiding " .. item_type .. ' "' .. item_name .. '"')
 
-	if not item_to_remove then
-		log('\tWARNING: Item "' .. item_name .. '" does not exist.')
-	elseif opt.hide_item_only then
-		log('\tHiding item "' .. item_name .. '"')
-
-		item_to_remove.icon = "__base__/graphics/icons/signal/signal-deny.png"
-		item_to_remove.icon_size = 64
-		item_to_remove.hidden = true
-		item_to_remove.hidden_in_factoriopedia = true
-	else
-		item_to_remove = nil
+			item_to_remove.icon = "__base__/graphics/icons/signal/signal-deny.png"
+			item_to_remove.icon_size = 64
+			item_to_remove.hidden = true
+			item_to_remove.hidden_in_factoriopedia = true
+		else
+			-- item_to_remove = nil
+			data.raw[item_type][item_name] = nil
+		end
 	end
 
 	for _, recipe_name in pairs(recipes_to_remove) do
@@ -88,6 +97,13 @@ lib.remove_item = function(item_name, opt)
 					icon = "__base__/graphics/icons/signal/signal-deny.png",
 				},
 			})
+		end
+
+		if opt.remove_recycling then
+			if data.raw.recipe[item_name .. "-recycling"] then
+				log('\t\tRemoving recycling recipe "' .. recipe_name .. '"')
+				data.raw.recipe[item_name .. "-recycling"] = nil
+			end
 		end
 
 		for _, technology_name in pairs(opt.remove_from_technologies or {}) do
