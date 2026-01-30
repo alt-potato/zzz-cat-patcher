@@ -2,11 +2,12 @@ if not (mods["Moshine"] and mods["electric-trains"]) then
 	return
 end
 
+local logl = require("lib.log")
 local lib = require("lib.manipulation")
 
 -- move electric train tech behind magnetism (moshine)
 if data.raw["technology"]["tech-electric-trains"] then
-    log("Moving electric train tech behind magnetism (Moshine)...")
+    logl.info("Moving electric train tech behind magnetism (Moshine)...")
 	table.insert(data.raw["technology"]["tech-electric-trains"].prerequisites, "moshine-tech-magnet")
 end
 

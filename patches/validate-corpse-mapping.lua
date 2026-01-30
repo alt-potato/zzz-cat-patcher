@@ -1,9 +1,11 @@
+local logl = require("lib.log")
+
 for corpse_name, corpse in pairs(data.raw["character-corpse"]) do
 	if corpse and corpse.armor_picture_mapping and corpse.pictures then
 		local num_pictures = #corpse.pictures
 		for armor_name, index in pairs(corpse.armor_picture_mapping or {}) do
 			if index > num_pictures then
-				log(
+				logl.info(
 					corpse_name
 						.. ": limiting armor_picture_mapping of "
 						.. armor_name
@@ -17,6 +19,6 @@ for corpse_name, corpse in pairs(data.raw["character-corpse"]) do
 			end
 		end
 	else
-		log("No armor_picture_mapping or no pictures for " .. corpse_name .. "?")
+		logl.warn("No armor_picture_mapping or no pictures for " .. corpse_name .. "?")
 	end
 end
