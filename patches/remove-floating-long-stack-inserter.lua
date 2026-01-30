@@ -9,10 +9,13 @@ then
 	return
 end
 
-local m_lib = require("lib.manipulation")
+local logl = require("lib.log")
+local mlib = require("lib.manipulation")
+
+logl.info("Removing floating long stack inserter...")
 
 -- you're killing me here moshine
-m_lib.remove_item("floating-long-stack-inserter", {
+mlib.remove_item("floating-long-stack-inserter", {
 	item_type = { "item", "inserter" },
 	remove_recycling = true,
 	remove_from_technologies = { "floating-logistics-technology" },

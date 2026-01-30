@@ -3,7 +3,7 @@ if not (mods["Moshine"] and mods["electric-trains"]) then
 end
 
 local logl = require("lib.log")
-local lib = require("lib.manipulation")
+local mlib = require("lib.manipulation")
 
 -- move electric train tech behind magnetism (moshine)
 if data.raw["technology"]["tech-electric-trains"] then
@@ -11,7 +11,8 @@ if data.raw["technology"]["tech-electric-trains"] then
 	table.insert(data.raw["technology"]["tech-electric-trains"].prerequisites, "moshine-tech-magnet")
 end
 
-lib.modify_ingredients("recipe-electric-locomotive", { type = "item", name = "magnet", amount = 5 })
-lib.modify_ingredients("recipe-electric-cargo-wagon", { type = "item", name = "magnet", amount = 5 })
-lib.modify_ingredients("recipe-electric-fluid-wagon", { type = "item", name = "magnet", amount = 5 })
-lib.modify_ingredients("recipe-electric-artillery-wagon", { type = "item", name = "magnet", amount = 5 })
+logl.info("Modifying electric train recipes to use magnets...")
+mlib.modify_ingredients("recipe-electric-locomotive", { type = "item", name = "magnet", amount = 5 })
+mlib.modify_ingredients("recipe-electric-cargo-wagon", { type = "item", name = "magnet", amount = 5 })
+mlib.modify_ingredients("recipe-electric-fluid-wagon", { type = "item", name = "magnet", amount = 5 })
+mlib.modify_ingredients("recipe-electric-artillery-wagon", { type = "item", name = "magnet", amount = 5 })

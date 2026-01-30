@@ -1,4 +1,7 @@
+local logl = require("lib.log")
 local modify_prototype = require("lib.manipulation").overwrite
+
+logl.info("Patching locales...")
 
 if mods["Cerys-Moon-of-Fulgora"] then
 	-- conflicts with overclock modules from metal-and-stars

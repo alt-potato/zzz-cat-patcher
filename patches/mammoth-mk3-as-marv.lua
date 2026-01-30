@@ -2,13 +2,16 @@ if not (mods["Factorio-Tiberium"] and mods["Mammoth-MK3"]) then
 	return
 end
 
-local m_lib = require("lib.manipulation")
+local logl = require("lib.log")
+local mlib = require("lib.manipulation")
+
+logl.info("Replacing MARV car entity with Mammoth MK3...")
 
 -- deep copy mammoth-mk3
 local mammoth_mk3 = table.deepcopy(data.raw["car"]["mammoth-mk3"])
 
 -- remove mammoth-mk3, tiberium-marv
-m_lib.remove_item(
+mlib.remove_item(
 	"mammoth-mk3",
 	{
 		item_type = { "item-with-entity-data", "car" },
@@ -16,17 +19,17 @@ m_lib.remove_item(
 		remove_from_technologies = { "mammoth-mk3" },
 	}
 )
-m_lib.remove_technology("mammoth-mk3")
+mlib.remove_technology("mammoth-mk3")
 
 -- remove t1 atom shells
-m_lib.remove_item("t1-atom-shell", { item_type = "ammo" })
-m_lib.add_defer_operation("remove-t1atom-techs", function(prototype)
-	m_lib.remove_technology(prototype.name)
+mlib.remove_item("t1-atom-shell", { item_type = "ammo" })
+mlib.add_defer_operation("remove-t1atom-techs", function(prototype)
+	mlib.remove_technology(prototype.name)
 end)
 local function is_t1atom_tech(prototype)
 	return string.sub(prototype.name, 1, string.len("t1atom-")) == "t1atom-"
 end
-m_lib.defer("technology", is_t1atom_tech, "remove-t1atom-techs")
+mlib.defer("technology", is_t1atom_tech, "remove-t1atom-techs")
 
 -- add mammoth-mk3 as tiberium-marv
 mammoth_mk3.name = "tiberium-marv"
@@ -44,16 +47,16 @@ if mods["aai-vehicles-laser-tank"] then
 	ammo_category_1 = "laser-cannon"
 	cooldown_1 = 30 -- slightly faster than laser tank
 
-    m_lib.overwrite({ "gun", "mammoth-cannon" }, {
+    mlib.overwrite({ "gun", "mammoth-cannon" }, {
         localized_name = { "item-name.laser-tank-cannon" }
     })
 end
-m_lib.overwrite({ "gun", "mammoth-cannon", "attack_parameters" }, {
+mlib.overwrite({ "gun", "mammoth-cannon", "attack_parameters" }, {
 	projectile_creation_offsets = { { -0.25, -1.75 } },
 	ammo_category = ammo_category_1,
 	cooldown = cooldown_1,
 })
-m_lib.overwrite({ "gun", "mammoth-cannon-b", "attack_parameters" }, {
+mlib.overwrite({ "gun", "mammoth-cannon-b", "attack_parameters" }, {
 	projectile_creation_offsets = { { 0.25, -1.75 } },
 })
 

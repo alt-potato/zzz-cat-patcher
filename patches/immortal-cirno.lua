@@ -2,6 +2,8 @@ if not mods["FUMO"] then
     return
 end
 
-local m_lib = require("lib.manipulation")
+local logl = require("lib.log")
+local mlib = require("lib.manipulation")
 
-m_lib.overwrite({ "simple-entity-with-owner", "cirnoitem" }, { max_health = 1000000 })
+logl.info("Granting Cirno immortality...")
+mlib.overwrite({ "simple-entity-with-owner", "cirnoitem" }, { max_health = 1000000 })

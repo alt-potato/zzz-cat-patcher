@@ -2,10 +2,13 @@ if not ((mods["tenebris"] or mods["tenebris-prime"]) and mods["dredgeworks"]) th
 	return
 end
 
-local m_lib = require("lib.manipulation")
+local logl = require("lib.log")
+local mlib = require("lib.manipulation")
 
-m_lib.add_defer_operation("remove-floating-logistics", function(prototype)
-	m_lib.remove_item(prototype.name, {
+logl.info("Removing floating bioluminescents...")
+
+mlib.add_defer_operation("remove-floating-logistics", function(prototype)
+	mlib.remove_item(prototype.name, {
 		item_type = { "item", "inserter", "transport-belt" },
 		quiet_miss = true, -- overly broad search on purpose :)
 		remove_recycling = true,
@@ -18,4 +21,4 @@ local function is_floating_bioluminescent(prototype)
 	return match == "floating-bioluminescent-" or match == "bioluminescent-floating-"
 end
 
-m_lib.defer("item", is_floating_bioluminescent, "remove-floating-logistics")
+mlib.defer("item", is_floating_bioluminescent, "remove-floating-logistics")
