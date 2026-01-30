@@ -18,4 +18,8 @@ if settings.startup["cat-patcher-immortal-cirno"].value then
 	require("patches.immortal-cirno")
 end
 
+if settings.startup["cat-patcher-senestella-stargate-solar"].value then
+	require("patches.senestella-stargate-solar")
+end
+
 require("lib.manipulation").execute_deferred()

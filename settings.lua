@@ -76,4 +76,11 @@ data:extend({
 		default_value = false,
 		order = "c"
 	},
+	{
+		type = "bool-setting",
+		name = "cat-patcher-senestella-stargate-solar",
+		setting_type = "startup",
+		default_value = true,
+		order = "a"
+	}
 })

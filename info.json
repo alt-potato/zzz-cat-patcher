@@ -33,7 +33,10 @@
     "? NapalmArtillery",
     "? Factorio-Tiberium",
     "? Mammoth-MK3",
-    "? FUMO"
+    "? FUMO",
+    "? PlanetsLib",
+    "(?) Redrawn-Space-Connections",
+    "(?) redrawn-space-compat-fixes"
   ],
   "description": "A mod containing various patches to various mods."
 }
