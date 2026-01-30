@@ -6,7 +6,7 @@ local heavyship_name = "lex-flying-heavyship"
 local heavyship = data.raw["spider-vehicle"][heavyship_name]
 
 -- should be 5600x5600 instead of 4000x4000
-log("patching grayscale " .. heavyship_name .. " (4000x4000 -> 5600x5600)...")
+log("Patching grayscale " .. heavyship_name .. " (4000x4000 -> 5600x5600)...")
 --             /e\
 
 if

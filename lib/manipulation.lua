@@ -30,7 +30,7 @@ local lib = {}
 
 ---@class lib.remove_item_opt
 ---@field item_type string|string[]? -- The type of item to remove, defaults to "item". Certain special items are in multiple categories, eg. "cars", "inserters".
----@field quiet_miss boolean? 
+---@field quiet_miss boolean?
 ---@field hide_item_only boolean?
 ---@field remove_recipes string[]? -- The recipes to remove, defaults to { item_name }
 ---@field remove_recycling boolean? -- Whether to remove the automatically generated recycling recipe (highly recommended if called after data.lua)
@@ -52,9 +52,9 @@ lib.remove_item = function(item_name, opt)
 	log(
 		'Removing "'
 			.. item_name
-			.. '" of type "'
+			.. '" of type '
 			.. serpent.line(recipes_to_remove)
-			.. '" with recipe(s): '
+			.. " with recipe(s): "
 			.. serpent.line(recipes_to_remove)
 			.. "..."
 	)
