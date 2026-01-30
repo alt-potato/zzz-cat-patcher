@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.11.0
+Date: 2026-01-29
+  Changes:
+    - Added tweak to replace MARV (and its questionable enlarged tank texture) with Mammoth Mk.3
+    - Added tweak to give Curno fumo 1000000 health
+    - Fixed item removal... not actually fully removing the item. Oops!
+---------------------------------------------------------------------------------------------------
 Version: 0.10.0
 Date: 2026-01-28
   Changes:
