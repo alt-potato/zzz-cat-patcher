@@ -61,5 +61,19 @@ data:extend({
 		setting_type = "startup",
 		default_value = false,
 		order = "b"
-	}
+	},
+	{
+		type = "bool-setting",
+		name = "cat-patcher-mammoth-mk3-as-marv",
+		setting_type = "startup",
+		default_value = false,
+		order = "b"
+	},
+	{
+		type = "bool-setting",
+		name = "cat-patcher-immortal-cirno",
+		setting_type = "startup",
+		default_value = false,
+		order = "c"
+	},
 })

@@ -8,11 +8,18 @@ local m_lib = require("lib.manipulation")
 local mammoth_mk3 = table.deepcopy(data.raw["car"]["mammoth-mk3"])
 
 -- remove mammoth-mk3, tiberium-marv
-m_lib.remove_item("mammoth-mk3", { item_type = "item-with-entity-data", remove_from_technologies = { "mammoth-mk3" } })
+m_lib.remove_item(
+	"mammoth-mk3",
+	{
+		item_type = { "item-with-entity-data", "car" },
+		additional_types = { "car" },
+		remove_from_technologies = { "mammoth-mk3" },
+	}
+)
 m_lib.remove_technology("mammoth-mk3")
 
 -- remove t1 atom shells
-m_lib.remove_item("t1-atom-shell")
+m_lib.remove_item("t1-atom-shell", { item_type = "ammo" })
 m_lib.add_defer_operation("remove-t1atom-techs", function(prototype)
 	m_lib.remove_technology(prototype.name)
 end)
@@ -31,10 +38,20 @@ mammoth_mk3.minable = { mining_time = 0.5, result = "tiberium-marv" }
 mammoth_mk3.weight = 50000
 
 -- final patches to mammoth-mk3 because i feel like it
-local ammo_category = (mods["aai-vehicles-laser-tank"] and "laser-cannon") or "cannon-shell"
+local ammo_category_1 = "cannon-shell"
+local cooldown_1 = 60 -- match mammoth-cannon-b by default
+if mods["aai-vehicles-laser-tank"] then
+	ammo_category_1 = "laser-cannon"
+	cooldown_1 = 30 -- slightly faster than laser tank
+
+    m_lib.overwrite({ "gun", "mammoth-cannon" }, {
+        localized_name = { "item-name.laser-tank-cannon" }
+    })
+end
 m_lib.overwrite({ "gun", "mammoth-cannon", "attack_parameters" }, {
 	projectile_creation_offsets = { { -0.25, -1.75 } },
-	ammo_category = ammo_category,
+	ammo_category = ammo_category_1,
+	cooldown = cooldown_1,
 })
 m_lib.overwrite({ "gun", "mammoth-cannon-b", "attack_parameters" }, {
 	projectile_creation_offsets = { { 0.25, -1.75 } },
@@ -42,11 +59,15 @@ m_lib.overwrite({ "gun", "mammoth-cannon-b", "attack_parameters" }, {
 
 local mammoth_rkt_1 = table.deepcopy(data.raw["gun"]["spidertron-rocket-launcher-1"])
 mammoth_rkt_1.name = "mammoth-rocket-launcher-1"
+mammoth_rkt_1.localized_name = { "item-name.rocket-launcher" }
+mammoth_rkt_1.localized_description = { "item-description.rocket-launcher" }
 mammoth_rkt_1.attack_parameters.projectile_orientation_offset = 0 -- i mean they're facing forward sooo
 mammoth_rkt_1.attack_parameters.projectile_creation_offsets = { { -1.25, -1 } }
 
 local mammoth_rkt_2 = table.deepcopy(data.raw["gun"]["spidertron-rocket-launcher-2"])
 mammoth_rkt_2.name = "mammoth-rocket-launcher-2"
+mammoth_rkt_2.localized_name = { "item-name.rocket-launcher" }
+mammoth_rkt_2.localized_description = { "item-description.rocket-launcher" }
 mammoth_rkt_2.attack_parameters.projectile_orientation_offset = 0
 mammoth_rkt_2.attack_parameters.projectile_creation_offsets = { { 1.25, -1 } }
 

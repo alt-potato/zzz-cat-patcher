@@ -5,6 +5,11 @@
   "author": "meconeko",
   "factorio_version": "2.0",
   "dependencies": [
+    "? base",
+    "? space-age",
+    "(?) RegularRecipeList-Compatible_with_AAI",
+    "(?) cybersyn-tweaks",
+    "(?) cybersyn-tweaks-patched",
     "? ProtogenCharacterUpdated",
     "? metal-and-stars",
     "? koboldengineer",
@@ -26,9 +31,9 @@
     "? rubia",
     "(?) secretas",
     "? NapalmArtillery",
-    "(?) RegularRecipeList-Compatible_with_AAI",
-    "(?) cybersyn-tweaks",
-    "(?) cybersyn-tweaks-patched"
+    "? Factorio-Tiberium",
+    "? Mammoth-MK3",
+    "? FUMO"
   ],
   "description": "A mod containing various patches to various mods."
 }
