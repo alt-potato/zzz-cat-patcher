@@ -11,14 +11,11 @@ logl.info("Replacing MARV car entity with Mammoth MK3...")
 local mammoth_mk3 = table.deepcopy(data.raw["car"]["mammoth-mk3"])
 
 -- remove mammoth-mk3, tiberium-marv
-mlib.remove_item(
-	"mammoth-mk3",
-	{
-		item_type = { "item-with-entity-data", "car" },
-		additional_types = { "car" },
-		remove_from_technologies = { "mammoth-mk3" },
-	}
-)
+mlib.remove_item("mammoth-mk3", {
+	item_type = { "item-with-entity-data", "car" },
+	additional_types = { "car" },
+	remove_from_technologies = { "mammoth-mk3" },
+})
 mlib.remove_technology("mammoth-mk3")
 
 -- remove t1 atom shells
@@ -47,9 +44,9 @@ if mods["aai-vehicles-laser-tank"] then
 	ammo_category_1 = "laser-cannon"
 	cooldown_1 = 30 -- slightly faster than laser tank
 
-    mlib.overwrite({ "gun", "mammoth-cannon" }, {
-        localized_name = { "item-name.laser-tank-cannon" }
-    })
+	mlib.overwrite({ "gun", "mammoth-cannon" }, {
+		localized_name = { "item-name.laser-tank-cannon" },
+	})
 end
 mlib.overwrite({ "gun", "mammoth-cannon", "attack_parameters" }, {
 	projectile_creation_offsets = { { -0.25, -1.75 } },

@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.12.0
+Date: 2026-01-30
+  Changes:
+    - Added patch to change solar power in space at Calidus-Senestella stargate from 1% -> 200% (matches Gleba)
+    - Cleaned up logging a bit
+---------------------------------------------------------------------------------------------------
 Version: 0.11.0
 Date: 2026-01-29
   Changes:

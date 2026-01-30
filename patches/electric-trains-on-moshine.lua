@@ -7,7 +7,7 @@ local mlib = require("lib.manipulation")
 
 -- move electric train tech behind magnetism (moshine)
 if data.raw["technology"]["tech-electric-trains"] then
-    logl.info("Moving electric train tech behind magnetism (Moshine)...")
+	logl.info("Moving electric train tech behind magnetism (Moshine)...")
 	table.insert(data.raw["technology"]["tech-electric-trains"].prerequisites, "moshine-tech-magnet")
 end
 

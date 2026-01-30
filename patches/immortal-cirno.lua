@@ -1,5 +1,5 @@
 if not mods["FUMO"] then
-    return
+	return
 end
 
 local logl = require("lib.log")
