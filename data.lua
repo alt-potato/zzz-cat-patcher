@@ -22,4 +22,8 @@ if settings.startup["cat-patcher-senestella-stargate-solar"].value then
 	require("patches.senestella-stargate-solar")
 end
 
+if settings.startup["cat-patcher-remove-floating-long-stack-inserter"].value then
+    require("patches.remove-floating-long-stack-inserter")
+end
+
 require("lib.manipulation").execute_deferred()
