@@ -20,3 +20,8 @@ mlib.remove_item("floating-long-stack-inserter", {
 	remove_recycling = true,
 	remove_from_technologies = { "floating-logistics-technology" },
 })
+
+-- you're killing me here paracelsin
+if mods["Paracelsin"] then
+	mlib.remove({ "recipe", "floating-long-stack-inserter-macerating" })
+end

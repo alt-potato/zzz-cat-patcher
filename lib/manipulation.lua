@@ -120,6 +120,8 @@ lib.remove_item = function(item_name, opt)
 	end
 end
 
+---Removes the specified technology.
+---@param technology_name string
 lib.remove_technology = function(technology_name)
 	logl.debug('Removing technology "' .. technology_name .. '"...')
 
@@ -130,6 +132,40 @@ lib.remove_technology = function(technology_name)
 	data.raw.technology[technology_name] = nil
 end
 
+---Traverses a table with the given path, returning nil if the path does not exist.
+---@param base table -- The table to traverse
+---@param path string[] -- The path to traverse
+---@param offset? integer -- The offset to apply to the path
+---@return table? target -- The target location after traversing, if it exists
+lib.safe_traverse = function(base, path, offset)
+	local current = base
+
+	-- apply offset
+	if offset then
+		if offset > 0 then
+			for i = 1, offset do
+				path[i] = ""
+			end
+		else
+			for i = 1, -offset do
+				path[#path - i + 1] = ""
+			end
+		end
+	end
+
+	-- traverse
+	for _, segment in pairs(path) do
+		if segment ~= "" then
+			current = current[segment]
+		end
+		if not current then
+			logl.warn('\tPath "' .. table.concat(path, ".") .. '" does not exist at segment "' .. segment)
+			return nil
+		end
+	end
+	return current
+end
+
 ---Replaces the top-level attributes of a prototype with the given modifiers.
 ---@param path string[] -- Path to the prototype, after data.raw
 ---@param modifiers table<string, any>
@@ -137,31 +173,35 @@ end
 lib.overwrite = function(path, modifiers, create_if_missing)
 	logl.debug('Modifying "' .. table.concat(path, ".") .. '" with ' .. table_size(modifiers) .. " modifiers...")
 
-	-- traverse the path
-	local current = data.raw
-	for _, segment in pairs(path) do
-		current = current[segment]
-
-		if not current then
-			logl.warn(
-				'\tPath "'
-					.. table.concat(path, ".")
-					.. '" does not exist at segment "'
-					.. segment
-					.. '". No changes made.'
-			)
-			return
-		end
+	local target = lib.safe_traverse(data.raw, path)
+	if not target then
+		logl.warn("\tOverwrite failed, no changes made.")
+		return
 	end
-	local target = current
 
 	for key, value in pairs(modifiers) do
+		logl.trace('\tOverwriting "' .. key .. '" with "' .. serpent.line(value or "<nil>") .. '"...')
 		if (create_if_missing and not target[key]) or not create_if_missing then
 			target[key] = value
 		else
 			logl.warn('\tKey "' .. key .. '" does not exist in ' .. table.concat(path, ".") .. ".")
 		end
 	end
+end
+
+---Removes the prototype at the given path.
+---@param path string[]
+lib.remove = function(path)
+	logl.debug('Removing "' .. table.concat(path, ".") .. '"...')
+
+	local last = path[#path] -- something something lua scope idk
+	local target = lib.safe_traverse(data.raw, path, -1)
+	if not target then
+		logl.warn("\tOverwrite failed, no changes made.")
+		return
+	end
+
+	target[last] = nil
 end
 
 ---@class IngredientPrototype
