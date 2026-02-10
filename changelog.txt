@@ -3,6 +3,7 @@ Version: 0.12.1
 Date: 2026-02-09
   Changes:
     - Fixed incompatibilities caused by Paracelsin's new macerating recipes
+    - Fully remove long stack inserters if disabled by Moshine (since Moshine doesn't fully remove them)
 ---------------------------------------------------------------------------------------------------
 Version: 0.12.0
 Date: 2026-01-30
