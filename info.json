@@ -1,6 +1,6 @@
 {
   "name": "zzz-cat-patcher",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "title": "Cat Patcher",
   "author": "meconeko",
   "factorio_version": "2.0",
@@ -35,6 +35,7 @@
     "? Mammoth-MK3",
     "? FUMO",
     "? PlanetsLib",
+    "? Paracelsin",
     "(?) Redrawn-Space-Connections",
     "(?) redrawn-space-compat-fixes"
   ],
